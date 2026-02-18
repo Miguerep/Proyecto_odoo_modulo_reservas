@@ -1,0 +1,15 @@
+# Ignorar datos de base de datos y archivos de Docker
+odoo-data/
+postgres-data/
+odoo-web-data/
+.bash_history
+
+# Ignorar archivos de sistema
+__pycache__/
+*.pyc
+.DS_Store
+.vscode/
+.idea/
+
+# Ignorar logs
+*.log
