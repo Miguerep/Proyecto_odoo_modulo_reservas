@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   db:
@@ -29,7 +28,6 @@ services:
     
     volumes:
       - ./odoo-data:/var/lib/odoo
-      # Desactivamos addons propios mientras arreglamos esto
       - ./addons:/mnt/extra-addons
     networks:
       - odoo-net
