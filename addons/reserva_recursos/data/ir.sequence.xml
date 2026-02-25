@@ -1,0 +1,6 @@
+<record id="seq_reserva_booking" model="ir.sequence">
+    <field name="name">Reserva Booking</field>
+    <field name="code">reserva.booking</field>
+    <field name="prefix">RES/</field>
+    <field name="padding">4</field>
+</record>

@@ -1,4 +1,5 @@
-from odoo import models, fields
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 
 class ReservaBooking(models.Model):
@@ -31,3 +32,44 @@ class ReservaBooking(models.Model):
             'La fecha de fin debe ser mayor a la fecha de inicio'
         )
     ]
+    
+    @api.constrains('fecha_inicio', 'fecha_fin', 'recurso_id')
+    def check_availability(self):
+        for record in self:
+            domain = [
+                ('recurso_id', '=', record.recurso_id.id),
+                ('id', '!=', record.id),  # Excluye esta reserva
+                ('estado', 'not in', ['cancelled', 'done']),
+                ('fecha_inicio', '<=', record.fecha_fin),
+                ('fecha_fin', '>=', record.fecha_inicio)
+            ]
+            solapadas = self.search(domain)
+            if solapadas:
+                raise ValidationError(
+                    ("Solapamiento! %s reservado %s → %s") % (
+                        record.recurso_id.name,
+                        solapadas[0].fecha_inicio,
+                        solapadas[0].fecha_fin
+                    )
+                )
+
+    # TRANSICIONES ESTADO (Dev3) - Llamar desde botones XML
+    def action_confirmar(self):
+        self.check_availability()  # Valida solapamiento
+        self.estado = 'confirmed'
+        return True
+
+    def action_finalizar(self):
+        self.estado = 'done'
+        return True
+
+    def action_cancelar(self):
+        self.estado = 'cancelled'
+        return True
+
+    # Auto código secuencial
+    @api.model
+    def create(self, vals):
+        if vals.get('name', 'New') == 'New':
+            vals['name'] = self.env['ir.sequence'].next_by_code('reserva.booking') or 'New'
+        return super().create(vals)
