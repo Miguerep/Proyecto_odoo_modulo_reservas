@@ -1,0 +1,56 @@
+<!--VISTA CALENDARIO-->
+<record id="view_reserva_booking_calendar" model="ir.ui.view">
+    <field name="name">reserva.booking.calendar</field>
+    <field name="model">reserva.booking</field>
+    <field name="arch" type="xml">
+        <calendar
+        string="Reservas"
+        date_start="fecha_inicio"
+        date_stop="fecha_fin"
+        color="recurso_id">
+        
+        <field name="name"/>
+        <field name="recurso_id"/>
+        <field name="usuario_id"/>
+        <field name="estado"/>
+        
+    </calendar>
+</field>
+</record>
+
+<!--VISTA SEARCH VIEW-->
+<record id="view_reserva_booking_search" model="ir.ui.view">
+    <field name="name">reserva.booking.search</field>
+    <field name="model">reserva.booking</field>
+    <field name="arch" type="xml">
+        <search>
+
+            <field name="recurso_id"/>
+
+            <filter string="Hoy"
+                domain="[('fecha_inicio','>=',context_today())]"/>
+
+            <!-- Filtro por esta semana -->
+            <filter string="Esta semana"
+                domain="[('fecha_inicio','>=',context_today())]"/>
+
+        </search>
+    </field>
+</record>
+
+<!-- Accion -->
+<record id="action_reserva_booking" model="ir.actions.act_window">
+    <field name="name">Reservas</field>
+    <field name="res_model">reserva.booking</field>
+    <field name="view_mode">calendar,tree,form</field>
+</record>
+
+<!-- menu principal  -->
+<menuitem id="menu_reserva_root"
+          name="Reservas"/>
+
+<!-- submnu -->
+<menuitem id="menu_reserva_booking"
+          name="Gestión de Reservas"
+          parent="menu_reserva_root"
+          action="action_reserva_booking"/>
