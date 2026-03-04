@@ -53,7 +53,7 @@ class ReservaBooking(models.Model):
                     )
                 )
 
-    # TRANSICIONES ESTADO (Dev3) - Llamar desde botones XML
+    # TRANSICIONES ESTADO - Llamar desde botones XML
     def action_confirmar(self):
         self.check_availability()
         self.estado = 'confirmed'
@@ -61,7 +61,6 @@ class ReservaBooking(models.Model):
         template = self.env.ref('reserva_recursos.email_template_reserva')
         if self.usuario_id.email:
             template.send_mail(self.id, force_send=True)
-
         return True
 
     def action_finalizar(self):
