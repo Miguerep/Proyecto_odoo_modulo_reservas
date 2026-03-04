@@ -38,7 +38,7 @@ class ReservaBooking(models.Model):
         for record in self:
             domain = [
                 ('recurso_id', '=', record.recurso_id.id),
-                ('id', '!=', record.id),  # Excluye esta reserva
+                ('id', '!=', record.id),  
                 ('estado', 'not in', ['cancelled', 'done']),
                 ('fecha_inicio', '<=', record.fecha_fin),
                 ('fecha_fin', '>=', record.fecha_inicio)
@@ -47,7 +47,7 @@ class ReservaBooking(models.Model):
             if solapadas:
                 raise ValidationError(
                     ("Solapamiento! %s reservado %s → %s") % (
-                        record.recurso_id.name,
+                        record .recurso_id.name,
                         solapadas[0].fecha_inicio,
                         solapadas[0].fecha_fin
                     )
@@ -55,7 +55,11 @@ class ReservaBooking(models.Model):
 
     # TRANSICIONES ESTADO (Dev3) - Llamar desde botones XML
     def action_confirmar(self):
+<<<<<<< Updated upstream
         self.check_availability()
+=======
+        self.check_availability()  
+>>>>>>> Stashed changes
         self.estado = 'confirmed'
 
         template = self.env.ref('reserva_recursos.email_template_reserva')
