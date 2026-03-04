@@ -28,6 +28,7 @@
         'views/templates.xml',
         'security/ir.model.access.csv',
         'views/booking_view.xmls',
+        'views/plantilla_email.xmls'
     ],
     # only loaded in demonstration mode
     'demo': [

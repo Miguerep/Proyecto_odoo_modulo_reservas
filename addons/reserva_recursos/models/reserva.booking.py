@@ -59,7 +59,8 @@ class ReservaBooking(models.Model):
         self.estado = 'confirmed'
 
         template = self.env.ref('reserva_recursos.email_template_reserva')
-        template.send_mail(self.id, force_send=True)
+        if self.usuario_id.email:
+            template.send_mail(self.id, force_send=True)
 
         return True
 

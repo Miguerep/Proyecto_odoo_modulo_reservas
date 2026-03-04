@@ -1,0 +1,27 @@
+<odoo>
+
+    <record id="email_template_reserva" model="mail.template">
+        <field name="name">Confirmación de Reserva</field>
+        <field name="model_id" ref="model_reserva_booking"/>
+        <field name="subject">Tu reserva ha sido confirmada</field>
+        <field name="email_from">${(user.email or '')}</field>
+        <field name="email_to">${object.usuario_id.email}</field>
+
+        <field name="body_html">
+            <![CDATA[
+                <p>Hola ${object.usuario_id.name},</p>
+
+                <p>Tu reserva ha sido confirmada correctamente.</p>
+
+                <p><strong>Código:</strong> ${object.name}</p>
+                <p><strong>Recurso:</strong> ${object.recurso_id.name}</p>
+                <p><strong>Inicio:</strong> ${object.fecha_inicio}</p>
+                <p><strong>Fin:</strong> ${object.fecha_fin}</p>
+
+                <p>Gracias por utilizar el sistema.</p>
+            ]]>
+        </field>
+
+    </record>
+
+</odoo>
