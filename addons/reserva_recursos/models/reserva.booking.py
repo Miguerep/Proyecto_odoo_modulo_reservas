@@ -55,11 +55,7 @@ class ReservaBooking(models.Model):
 
     # TRANSICIONES ESTADO (Dev3) - Llamar desde botones XML
     def action_confirmar(self):
-<<<<<<< Updated upstream
         self.check_availability()
-=======
-        self.check_availability()  
->>>>>>> Stashed changes
         self.estado = 'confirmed'
 
         template = self.env.ref('reserva_recursos.email_template_reserva')
