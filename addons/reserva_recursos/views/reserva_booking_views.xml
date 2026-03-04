@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- VISTA KANBAN por ESTADO (Dev3) -->
+    <record id="view_reserva_booking_kanban" model="ir.ui.view">
+        <field name="name">reserva.booking.kanban</field>
+        <field name="model">reserva.booking</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="estado" class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="recurso_id"/>
+                <field name="usuario_id"/>
+                <field name="fecha_inicio"/>
+                <field name="estado"/>
+                <field name="motivo"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_content">
+                                <div class="oe_kanban_details">
+                                    <strong><field name="name"/></strong>
+                                    <br/>
+                                    <field name="recurso_id"/>
+                                    <br/>
+                                    Usuario: <field name="usuario_id"/>
+                                    <br/>
+                                    <field name="fecha_inicio"/> - <field name="fecha_fin"/>
+                                </div>
+                                <div class="oe_kanban_bottom">
+                                    <field name="estado" widget="badge"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- FORM con HEADER STATUSBAR + BOTONES (Dev3) -->
+    <record id="view_reserva_booking_form" model="ir.ui.view">
+        <field name="name">reserva.booking.form</field>
+        <field name="model">reserva.booking</field>
+        <field name="arch" type="xml">
+            <form>
+                <!-- HEADER STATUSBAR + BOTONES Dev3 -->
+                <header>
+                    <field name="estado" widget="statusbar" 
+                           statusbar_visible="draft,confirmed,done"/>
+                    <!-- Botones ejecutan métodos Python -->
+                    <button name="action_confirmar" type="object" 
+                            string="Confirmar" class="btn-primary"
+                            states="draft"/>
+                    <button name="action_finalizar" type="object" 
+                            string="Finalizar" class="btn-success"
+                            states="confirmed"/>
+                    <button name="action_cancelar" type="object" 
+                            string="Cancelar" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="recurso_id"/>
+                            <field name="usuario_id"/>
+                        </group>
+                        <group>
+                            <field name="fecha_inicio"/>
+                            <field name="fecha_fin"/>
+                            <field name="estado"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Motivo">
+                            <field name="motivo"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- TREE básica -->
+    <record id="view_reserva_booking_tree" model="ir.ui.view">
+        <field name="name">reserva.booking.tree</field>
+        <field name="model">reserva.booking</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="recurso_id"/>
+                <field name="usuario_id"/>
+                <field name="fecha_inicio"/>
+                <field name="fecha_fin"/>
+                <field name="estado" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ACTION principal -->
+    <record id="action_reserva_booking" model="ir.actions.act_window">
+        <field name="name">Reservas</field>
+        <field name="res_model">reserva.booking</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="view_reserva_booking_kanban"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primera reserva
+            </p>
+        </field>
+    </record>
+
+    <!-- MENU -->
+    <menuitem id="menu_reserva_root" name="Reservas" sequence="10"/>
+    <menuitem id="menu_reserva_booking" 
+              name="Reservas" parent="menu_reserva_root"
+              action="action_reserva_booking" sequence="10"/>
+</odoo>

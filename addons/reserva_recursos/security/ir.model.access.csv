@@ -1,2 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_reserva_recursos_reserva_recursos,reserva_recursos.reserva_recursos,model_reserva_recursos_reserva_recursos,base.group_user,1,1,1,1
+access_reserva_booking_user,reserva.booking.user,model_reserva_booking,base.group_user,1,1,1,0
+access_reserva_booking_admin,reserva.booking.admin,model_reserva_booking,base.group_system,1,1,1,1
+access_reserva_categoria_user,reserva.categoria.user,model_reserva_categoria,base.group_user,1,1,1,1
+access_reserva_recurso_user,reserva.recurso.user,model_reserva_recurso,base.group_user,1,1,1,1
+access_reserva_recurso_admin,reserva.recurso.admin,model_reserva_recurso,base.group_system,1,1,1,1
